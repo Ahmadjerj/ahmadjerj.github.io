@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="darkreader-lock">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmad Jerjawi (Arkipon) | Developer & Privacy Advocate</title>
+    <title>@ahmadjerjawi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -44,8 +45,7 @@
             background: linear-gradient(90deg, var(--light-text), #aaa);
             -webkit-background-clip: text; background-clip: text; color: transparent;
             margin: 0;
-            cursor: pointer; /* Indicates it's interactive */
-        }
+            cursor: pointer;         }
 
         header p {
             font-size: clamp(1rem, 4vw, 1.2rem);
@@ -109,7 +109,7 @@
             transition: transform 0.3s ease-out;
         }
         footer a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
-        
+
         .hit-counter {
             margin-top: 30px;
         }
@@ -165,6 +165,37 @@
     </footer>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Page Title Animation ---
+        const fullTitle = '@ahmadjerjawi';
+        const minLength = 1; // The '@' character
+        const pauseDuration = 2000;
+	    const deleteSpeed = 80;
+	    const addSpeed = 120;
+
+    function animateTitleCycle() {
+            // Step 1: Delete characters until only the first one is left
+            const deleteInterval = setInterval(() => {
+                if (document.title.length > minLength) {
+                    document.title = document.title.slice(0, -1);
+                } else {
+                    clearInterval(deleteInterval);
+                    const addInterval = setInterval(() => {
+                        if (document.title.length < fullTitle.length) {
+                            document.title = fullTitle.substring(0, document.title.length + 1);
+                        } else {
+                            clearInterval(addInterval);
+                            setTimeout(animateTitleCycle, pauseDuration);
+                        }
+                    }, addSpeed);
+                }
+            }, deleteSpeed);
+        }
+
+        // Start the first cycle after an initial pause
+        setTimeout(animateTitleCycle, pauseDuration);
+
+
         // --- EFFECT 1: Mouse Follow Spotlight ---
         document.body.addEventListener('mousemove', e => {
             document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
@@ -174,18 +205,15 @@
         // --- EFFECT 2: Hover-activated Text Scramble (FIXED) ---
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let interval = null;
-        
-        // Select the container (<header>) and the element to animate (<h1>)
+
         const header = document.querySelector("header");
         const h1 = header.querySelector("h1");
 
-        // Use 'mouseenter' on the container to prevent re-triggering on child elements
         header.addEventListener('mouseenter', () => {
             let iteration = 0;
-            clearInterval(interval); // Clear any previous, unfinished interval
+            clearInterval(interval);
 
             interval = setInterval(() => {
-                // IMPORTANT: Use the 'h1' variable directly, not event.target
                 h1.innerText = h1.dataset.value
                     .split("")
                     .map((letter, index) => {
@@ -228,7 +256,7 @@
                 projectList.innerHTML = ''; // Clear the loader
                 data.forEach(repo => {
                     if (repo.name === 'ahmadjerjawi') return;
-                    
+
                     const projectItem = document.createElement('div');
                     projectItem.classList.add('project-item', 'hidden');
 
@@ -256,12 +284,12 @@
                         homepageBtn.textContent = 'Visit Page';
                         buttonContainer.appendChild(homepageBtn);
                     }
-                    
+
                     projectItem.appendChild(title);
                     projectItem.appendChild(description);
                     projectItem.appendChild(buttonContainer);
                     projectList.appendChild(projectItem);
-                    
+
                     observer.observe(projectItem);
                 });
             })

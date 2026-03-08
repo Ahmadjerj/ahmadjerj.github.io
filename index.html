@@ -131,7 +131,7 @@
 <body>
     <header>
         <div class="container">
-            <h1 data-value="Ahmad Jerjawi (Arkipon)">Ahmad Jerjawi (Arkipon)</h1>
+            <h1 data-value="Ahmad Jerj">Ahmad Jerj</h1>
             <p>Privacy-Obsessed Developer | Open-Source Enthusiast</p>
         </div>
     </header>
@@ -247,7 +247,7 @@
 
         // --- DYNAMIC CONTENT & SECURITY: GitHub API Fetch ---
         const projectList = document.getElementById('project-list');
-        fetch('https://api.github.com/users/ahmadjerjawi/repos?sort=updated&per_page=9')
+        fetch('https://api.github.com/users/ahmadjerj/repos?sort=updated&per_page=9')
             .then(response => {
                 if (!response.ok) { throw new Error(`Network response was not ok: ${response.statusText}`); }
                 return response.json();
